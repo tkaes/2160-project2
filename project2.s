@@ -49,10 +49,10 @@ getchar:
     sw x0, 0(sp)                # clear memory location of sp
 
 # body
-    li a0, STDIN                  # a0 = STDIN
+    li a0, STDIN                # a0 = STDIN
     addi a1, sp, 0              # a1 = addr of sp
-    li a2, 1                        # a2 = 1 byte
-    li a7, __NR_READ             # a7 = __NR_READ
+    li a2, 1                    # a2 = 1 byte
+    li a7, __NR_READ            # a7 = __NR_READ
     ecall
 
 # epilog
@@ -69,10 +69,10 @@ putchar:
     sb a0, 0(sp)                # store a0 in sp
 
 # body
-    li a0, STDOUT                   # a0 = STDOUT
+    li a0, STDOUT               # a0 = STDOUT
     addi a1, sp, 0              # a1 = addr of sp
     li a2, 1                    # a2 = 1 byte
-    li a7, __NR_WRITE                   # a7 = __NR_WRITE
+    li a7, __NR_WRITE           # a7 = __NR_WRITE
     ecall
 
 # epilog
@@ -102,11 +102,11 @@ gets_loop:
     sb a0, 0(t0)                # t0 = a0
     addi t0, t0, 1              # incr buf pointer
 
-    # if not newline, continue reading
-    li t1, NEWLINE                   # t1 = newline
+    # if != NEWLINE, continue
+    li t1, NEWLINE              # t1 = newline
     bne a0, t1, gets_loop       # if a0 != t1, loop again
 
-    # if newline, replace with NULL
+    # if == NEWLINE, replace w/ NULL
     sb zero, -1(t0)             # store NULL at end
 
     # get length of string
@@ -144,7 +144,7 @@ puts_loop:
 
 # epilog
 puts_exit:
-    li a0, NEWLINE                   # a0 = NEWLINE
+    li a0, NEWLINE              # a0 = NEWLINE
     call putchar
 
     li a0, 0                    # a0 = 0 on success
